@@ -3,35 +3,34 @@ LABEL authors="barbz"
 
 WORKDIR /app
 
-COPY package*.json ./
-COPY next.config.mjs ./
-COPY tsconfig.json ./
-COPY postcss.config.mjs ./
-COPY tailwind.config.js ./
+# Install pnpm
+RUN npm install -g pnpm
 
-RUN npm ci
+COPY package.json pnpm-lock.yaml* ./
 
-# Copy font code
+RUN pnpm install --frozen-lockfile
+
 COPY . .
 
-RUN npm run build
+RUN pnpm build
 
 FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy from builder stage
-COPY --from=builder /app/package*.json ./
+RUN npm install -g pnpm
+
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/pnpm-lock.yaml* ./
 COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 
-# Install production dependencies
-RUN npm ci --omit=dev
+RUN pnpm install --prod --frozen-lockfile
 
 ENV NODE_ENV=production
 ENV PORT=3000
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
