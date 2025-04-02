@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  web-sports-elo:
+    image: baaarbz/web-sports-elo:latest
+    container_name: web-sports-elo
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - sports-elo-network
+
+networks:
+  sports-elo-network:
+    external: true

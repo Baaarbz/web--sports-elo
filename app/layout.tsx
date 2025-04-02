@@ -7,9 +7,7 @@ import { SportsProvider } from "@/contexts/sports-context"
 
 export const metadata = {
   title: "Sports ELO - Athlete Rating System",
-  description:
-    "A statistical approach to ranking athletes across different sports based on their performance over time.",
-    generator: 'v0.dev'
+  description: "A statistical approach to ranking athletes across different sports based on their performance over time."
 }
 
 export default function RootLayout({
