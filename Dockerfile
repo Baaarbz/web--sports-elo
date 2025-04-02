@@ -27,7 +27,7 @@ COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 
-RUN echo 'y' | pnpm install --prod --force
+RUN echo 'y' | pnpm install --prod --frozen-lockfile
 
 ENV NODE_ENV=production
 ENV PORT=3000
