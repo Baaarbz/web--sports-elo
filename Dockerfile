@@ -9,7 +9,7 @@ RUN npm install -g pnpm
 COPY pnpm-workspace.yaml ./
 COPY package.json pnpm-lock.yaml* ./
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 
 COPY . .
 
@@ -27,7 +27,7 @@ COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 
-RUN pnpm install --prod --frozen-lockfile
+RUN pnpm install --prod
 
 ENV NODE_ENV=production
 ENV PORT=3000
