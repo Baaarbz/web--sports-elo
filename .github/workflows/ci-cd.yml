@@ -28,7 +28,16 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: |
+          pnpm setup
+          pnpm config set auto-install-peers true
+          pnpm exec playwright install-deps
+          PNPM_FLAGS="--shamefully-hoist"
+          pnpm install --no-frozen-lockfile $PNPM_FLAGS
+
+      - name: Approve native builds
+        run: |
+          echo 'y' | pnpm install --no-frozen-lockfile
 
       - name: Build
         run: pnpm build
