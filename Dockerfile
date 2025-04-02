@@ -9,7 +9,7 @@ RUN npm install -g pnpm
 
 COPY package.json pnpm-lock.yaml* ./
 
-RUN echo 'y' | pnpm install --frozen-lockfile
+RUN echo 'y' | pnpm install --force
 
 COPY . .
 
@@ -27,7 +27,7 @@ COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 
-RUN echo 'y' | pnpm install --prod --frozen-lockfile
+RUN echo 'y' | pnpm install --prod --force
 
 ENV NODE_ENV=production
 ENV PORT=3000
