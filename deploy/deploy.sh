@@ -7,10 +7,7 @@ fi
 
 docker pull docker.io/baaarbz/web-sports-elo:latest
 
-docker stop web-sports-elo &>/dev/null || true
-docker rm web-sports-elo &>/dev/null || true
-
-docker run -d --restart=always -p 3000:3000 --name web-sports-elo \
+docker run -d --restart=always --replace -p 3000:3000 --name web-sports-elo \
   --network sports-elo-network \
   baaarbz/web-sports-elo:latest
 
