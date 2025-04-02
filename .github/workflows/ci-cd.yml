@@ -29,11 +29,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pnpm setup
-          pnpm config set auto-install-peers true
-          pnpm exec playwright install-deps
-          PNPM_FLAGS="--shamefully-hoist"
-          pnpm install --no-frozen-lockfile $PNPM_FLAGS
+          echo 'y' | pnpm install --shamefully-hoist
 
       - name: Approve native builds
         run: |
